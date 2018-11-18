@@ -23,16 +23,22 @@ public class Weahter_Datebase_entity {
     @ColumnInfo(name = "temp_max")
     private double temp_max ;
 
+    @ColumnInfo(name = "Date")
+    private int Date;
+
+    @ColumnInfo(name = "Description")
+    private String Description;
+
 
     public Weahter_Datebase_entity()
-    {
-
-    }
-    public Weahter_Datebase_entity(String city_name, double temp, double temp_min, double temp_max) {
+    {}
+    public Weahter_Datebase_entity(String city_name, double temp, double temp_min, double temp_max, int date, String description) {
         City_name = city_name;
         this.temp = temp;
         this.temp_min = temp_min;
         this.temp_max = temp_max;
+        Date = date;
+        Description = description;
     }
 
     public String getCity_name() {
@@ -75,4 +81,19 @@ public class Weahter_Datebase_entity {
         this.temp_max = temp_max;
     }
 
+    public int getDate() {
+        return Date;
+    }
+
+    public void setDate(int date) {
+        Date = date;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
 }

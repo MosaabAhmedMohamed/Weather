@@ -18,6 +18,14 @@ public class Common {
         return formatted;
     }
 
+    public static String convertUnixToDay(long dt)
+    {
+        Date date = new Date(dt*1000L);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd");
+        String formatted = sdf.format(date);
+        return formatted;
+    }
+
     public static String convertUnixToHour(long dt)
     {
         Date date = new Date(dt*1000L);

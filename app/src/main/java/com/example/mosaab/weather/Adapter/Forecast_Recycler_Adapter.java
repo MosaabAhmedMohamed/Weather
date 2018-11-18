@@ -78,7 +78,7 @@ public class Forecast_Recycler_Adapter extends RecyclerView.Adapter<Forecast_Rec
        int itemCount =0;
 
         if (Common.isOnline.equals("YES")) {
-           itemCount = forecast_json_list.list.size();
+           itemCount = forecast_json_list.getList().size();
         }
         else if(Common.isOnline.equals("NO"))
         {

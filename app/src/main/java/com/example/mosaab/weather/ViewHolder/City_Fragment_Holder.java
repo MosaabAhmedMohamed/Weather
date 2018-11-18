@@ -2,6 +2,7 @@ package com.example.mosaab.weather.ViewHolder;
 
 
 import android.annotation.SuppressLint;
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.mosaab.weather.Model.Forecast_Database_entity;
 import com.example.mosaab.weather.Model.Forecast_Json;
@@ -28,6 +30,8 @@ import com.example.mosaab.weatherJson.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,6 +56,8 @@ public class City_Fragment_Holder extends Fragment {
     private  Weather_Json weather_json;
 
     private  weather_Database database;
+    private List<Weahter_Datebase_entity> weahter_datebase_entity;
+    private List<Forecast_Database_entity> forecast_database_entitiy;
 
     public City_Fragment_Holder() {
         // Required empty public constructor
@@ -79,13 +85,14 @@ public class City_Fragment_Holder extends Fragment {
             InitRetorFit();
             getWeather();
             getForecast();
+
         }
         else if(isOnline() == false)
         {
             Common.isOnline="NO";
-            GetWeatherFromDatabase();
-            GetForecastFromDatabase();
+            CheckDate();
         }
+
 
         return City_View;
     }
@@ -105,8 +112,9 @@ public class City_Fragment_Holder extends Fragment {
 
         }
 
+
      //to check the status of the device is connected to the internet or NOT
-    public boolean isOnline() {
+    private boolean isOnline() {
         Runtime runtime = Runtime.getRuntime();
         try {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
@@ -134,6 +142,27 @@ public class City_Fragment_Holder extends Fragment {
                 .build();
     }
 
+    private void InitDatebaseEntities()
+    {
+        weahter_datebase_entity =database.weather_dao().getAllFromWeather(City_name);
+        forecast_database_entitiy =database.weather_dao().getAllFromForecast(City_name);
+    }
+
+    //To check the  validation of the date in the app
+    private void CheckDate()
+    {
+        InitDatebaseEntities();
+        Calendar cal = Calendar.getInstance();
+
+        int end_Of_forecast_days= Integer.valueOf(cal.get(Calendar.DATE));
+        end_Of_forecast_days+=5;
+        if (String.valueOf( cal.get(Calendar.DATE)).equals(Common.convertUnixToDay(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDate())) &&
+                String.valueOf(end_Of_forecast_days).equals(Common.convertUnixToDay(forecast_database_entitiy.get(forecast_database_entitiy.size()-1).getDate())))
+        {
+            GetWeatherFromDatabase();
+            GetForecastFromDatabase();
+        }
+    }
     //Getting the weather data from the API
     private void getWeather () {
             Call<Weather_Json> call = openWeatherCity
@@ -185,20 +214,24 @@ public class City_Fragment_Holder extends Fragment {
 
         database.weather_dao().insertAllToWeather(new Weahter_Datebase_entity(City_name,weather_json.getMain().getTemp(),
                 weather_json.getMain().getTemp_min(),
-                weather_json.getMain().getTemp_min()));
+                weather_json.getMain().getTemp_max(),
+                weather_json.getDt(),
+                weather_json.getWeather().get(0).getDescription()));
     }
 
     private void GetWeatherFromDatabase(){
 
-        List<Weahter_Datebase_entity> weahter_datebase_entity =database.weather_dao().getAllFromWeather(City_name);
+
 
         if(weahter_datebase_entity.size()!=0) {
+          //  Toast.makeText(getActivity(),weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDescription(), Toast.LENGTH_SHORT).show();
             degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp()));
             higher_degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp_max()));
             lower_degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp_min()));
         }
 
-        Toast.makeText(getActivity(), "Check Your Internet Connection !", Toast.LENGTH_SHORT).show();
+
+         Toast.makeText(getActivity(), "Check Your Internet Connection !", Toast.LENGTH_SHORT).show();
     }
 
     //Getting the Forecast data from the API
@@ -254,12 +287,15 @@ public class City_Fragment_Holder extends Fragment {
     private void GetForecastFromDatabase() {
 
 
-        List<Forecast_Database_entity> forecast_database_entitiy =database.weather_dao().getAllFromForecast(City_name);
+
         if(!forecast_database_entitiy.isEmpty()) {
             forecast_adapter = new Forecast_Recycler_Adapter(getActivity(), forecast_database_entitiy);
             forecast_recycler.setAdapter(forecast_adapter);
             forecast_adapter.notifyDataSetChanged();
-            Toast.makeText(getActivity(), forecast_database_entitiy.get(forecast_database_entitiy.size()-1).getCity_name(), Toast.LENGTH_SHORT).show();
+         // Toast.makeText(getActivity(), forecast_database_entitiy.get(forecast_database_entitiy.size()-1).getCity_name(), Toast.LENGTH_SHORT).show();
+
+
+
         }
 
     }
