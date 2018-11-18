@@ -8,6 +8,7 @@ public class Main {
     private double temp_min ;
     private double temp_max ;
 
+
     public Main() {
     }
 
