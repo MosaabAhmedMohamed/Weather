@@ -1,4 +1,4 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.Model;
 
 public class City {
 

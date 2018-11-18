@@ -1,4 +1,4 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.Model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -22,12 +22,12 @@ public class Weather_Json {
     public Weather_Json() {
     }
 
-    public List<com.example.mosaab.weather.weather> getWeather() {
+    public List<com.example.mosaab.weather.Model.weather> getWeather() {
 
         return weather;
     }
 
-    public void setWeather(List<com.example.mosaab.weather.weather> weather) {
+    public void setWeather(List<com.example.mosaab.weather.Model.weather> weather) {
         this.weather = weather;
     }
 

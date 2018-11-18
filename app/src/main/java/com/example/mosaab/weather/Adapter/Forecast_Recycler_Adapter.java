@@ -1,4 +1,4 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,15 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.mosaab.weather.Common.Common;
+import com.example.mosaab.weather.Model.Forecast_Json;
 import com.example.mosaab.weatherJson.R;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 public class Forecast_Recycler_Adapter extends RecyclerView.Adapter<Forecast_Recycler_Adapter.ViewHolder>{
 

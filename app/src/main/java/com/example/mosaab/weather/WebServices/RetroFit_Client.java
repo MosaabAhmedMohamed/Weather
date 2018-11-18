@@ -1,4 +1,4 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.WebServices;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

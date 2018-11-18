@@ -1,4 +1,4 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.Model;
 
 import java.util.List;
 
@@ -32,11 +32,11 @@ public class MyList {
         this.main = main;
     }
 
-    public List<com.example.mosaab.weather.weather> getWeather() {
+    public List<com.example.mosaab.weather.Model.weather> getWeather() {
         return weather;
     }
 
-    public void setWeather(List<com.example.mosaab.weather.weather> weather) {
+    public void setWeather(List<com.example.mosaab.weather.Model.weather> weather) {
         this.weather = weather;
     }
 

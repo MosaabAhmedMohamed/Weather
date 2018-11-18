@@ -1,10 +1,10 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.Interfaces;
 
 
 
-import java.util.List;
+import com.example.mosaab.weather.Model.Forecast_Json;
+import com.example.mosaab.weather.Model.Weather_Json;
 
-import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface OpenWeatherCity {
 
     @GET("weather")
-    Call<Weather_Json> getWeatherByCity(@Query("q") String City,@Query("appid") String Key);
+    Call<Weather_Json> getWeatherByCity(@Query("q") String City, @Query("appid") String Key);
 
 
     @GET("forecast")

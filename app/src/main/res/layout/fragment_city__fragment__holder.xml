@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bgimage"
-    tools:context="com.example.mosaab.weather.City_Fragment_Holder">
+    tools:context="com.example.mosaab.weather.ViewHolder.City_Fragment_Holder">
 
     <ImageView
         android:id="@+id/image_weather"

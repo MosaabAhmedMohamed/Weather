@@ -1,4 +1,4 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.ViewHolder;
 
 
 import android.annotation.SuppressLint;
@@ -14,17 +14,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mosaab.weather.Model.Forecast_Json;
+import com.example.mosaab.weather.Adapter.Forecast_Recycler_Adapter;
+import com.example.mosaab.weather.Interfaces.OpenWeatherCity;
+import com.example.mosaab.weather.WebServices.RetroFit_Client;
+import com.example.mosaab.weather.Model.Weather_Json;
 import com.example.mosaab.weatherJson.R;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,4 +1,4 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.ViewHolder;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
