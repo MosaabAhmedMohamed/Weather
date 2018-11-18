@@ -1,4 +1,4 @@
-package com.example.mosaab.weather.Common;
+package com.example.mosaab.weather.common;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

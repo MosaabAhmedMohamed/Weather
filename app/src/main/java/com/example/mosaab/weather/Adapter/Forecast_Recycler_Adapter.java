@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mosaab.weather.Common.Common;
+import com.example.mosaab.weather.common.Common;
 import com.example.mosaab.weather.Model.Forecast_Json;
 import com.example.mosaab.weatherJson.R;
 import com.squareup.picasso.Picasso;
