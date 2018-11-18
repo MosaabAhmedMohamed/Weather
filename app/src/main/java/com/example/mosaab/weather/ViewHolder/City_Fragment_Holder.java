@@ -183,14 +183,14 @@ public class City_Fragment_Holder extends Fragment {
 
     private void InsetWeatherToDatabase() {
 
-        database.weather_dao().insertAllToWeather(new Weahter_Datebase_entity(weather_json.getMain().getTemp(),
+        database.weather_dao().insertAllToWeather(new Weahter_Datebase_entity(City_name,weather_json.getMain().getTemp(),
                 weather_json.getMain().getTemp_min(),
                 weather_json.getMain().getTemp_min()));
     }
 
     private void GetWeatherFromDatabase(){
 
-        List<Weahter_Datebase_entity> weahter_datebase_entity =database.weather_dao().getAllFromWeather();
+        List<Weahter_Datebase_entity> weahter_datebase_entity =database.weather_dao().getAllFromWeather(City_name);
 
         if(weahter_datebase_entity.size()!=0) {
             degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp()));
@@ -243,7 +243,7 @@ public class City_Fragment_Holder extends Fragment {
         for (int i = 0; i <forecast_jsons_list.list.size() ; i++) {
 
 
-            database.weather_dao().insertAllToForecast(new Forecast_Database_entity(forecast_jsons_list.getList().get(i).getMain().getTemp(),
+            database.weather_dao().insertAllToForecast(new Forecast_Database_entity(City_name,forecast_jsons_list.getList().get(i).getMain().getTemp(),
                     forecast_jsons_list.getList().get(i).getMain().getTemp_min(),
                     forecast_jsons_list.getList().get(i).getMain().getTemp_max(),
                     forecast_jsons_list.getList().get(i).getDt(),
@@ -254,11 +254,12 @@ public class City_Fragment_Holder extends Fragment {
     private void GetForecastFromDatabase() {
 
 
-        List<Forecast_Database_entity> forecast_database_entitiy =database.weather_dao().getAllFromForecast();
+        List<Forecast_Database_entity> forecast_database_entitiy =database.weather_dao().getAllFromForecast(City_name);
         if(!forecast_database_entitiy.isEmpty()) {
             forecast_adapter = new Forecast_Recycler_Adapter(getActivity(), forecast_database_entitiy);
             forecast_recycler.setAdapter(forecast_adapter);
             forecast_adapter.notifyDataSetChanged();
+            Toast.makeText(getActivity(), forecast_database_entitiy.get(forecast_database_entitiy.size()-1).getCity_name(), Toast.LENGTH_SHORT).show();
         }
 
     }

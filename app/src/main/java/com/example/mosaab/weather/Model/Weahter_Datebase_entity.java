@@ -11,6 +11,9 @@ public class Weahter_Datebase_entity {
     @PrimaryKey(autoGenerate = true)
     private int id ;
 
+    @ColumnInfo(name = "city")
+    private String City_name;
+
     @ColumnInfo(name = "temp")
     private double temp ;
 
@@ -21,11 +24,23 @@ public class Weahter_Datebase_entity {
     private double temp_max ;
 
 
-    public Weahter_Datebase_entity(double temp, double temp_min, double temp_max) {
+    public Weahter_Datebase_entity()
+    {
+
+    }
+    public Weahter_Datebase_entity(String city_name, double temp, double temp_min, double temp_max) {
+        City_name = city_name;
         this.temp = temp;
         this.temp_min = temp_min;
         this.temp_max = temp_max;
+    }
 
+    public String getCity_name() {
+        return City_name;
+    }
+
+    public void setCity_name(String city_name) {
+        City_name = city_name;
     }
 
     public int getId() {

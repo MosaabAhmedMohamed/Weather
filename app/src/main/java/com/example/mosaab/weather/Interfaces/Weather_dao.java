@@ -15,13 +15,13 @@ public interface Weather_dao {
     @Insert
     void insertAllToWeather(Weahter_Datebase_entity weahter_datebase_entitiy);
 
-    @Query("SELECT * FROM weahter_datebase_entity")
-     List<Weahter_Datebase_entity> getAllFromWeather();
+    @Query("SELECT * FROM weahter_datebase_entity WHERE city LIKE :city_name")
+     List<Weahter_Datebase_entity> getAllFromWeather(String city_name);
 
     @Insert
     void insertAllToForecast(Forecast_Database_entity forecast_database_entity);
 
-    @Query("SELECT * FROM forecast_database_entity")
-    List<Forecast_Database_entity> getAllFromForecast();
+    @Query("SELECT * FROM forecast_database_entity WHERE city LIKE :city_name_forecast")
+    List<Forecast_Database_entity> getAllFromForecast(String city_name_forecast);
 
 }

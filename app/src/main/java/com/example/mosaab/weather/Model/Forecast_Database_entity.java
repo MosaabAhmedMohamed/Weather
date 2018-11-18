@@ -10,6 +10,9 @@ public class Forecast_Database_entity {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "city")
+    private String City_name;
+
     @ColumnInfo(name = "temp")
     private double temp ;
 
@@ -25,11 +28,14 @@ public class Forecast_Database_entity {
     @ColumnInfo(name = "description")
     private String Descrirption;
 
+
+
     public Forecast_Database_entity() {
 
     }
 
-    public Forecast_Database_entity(double temp, double temp_min, double temp_max, int date, String descrirption) {
+    public Forecast_Database_entity(String city_name, double temp, double temp_min, double temp_max, int date, String descrirption) {
+        City_name = city_name;
         this.temp = temp;
         this.temp_min = temp_min;
         this.temp_max = temp_max;
@@ -43,6 +49,14 @@ public class Forecast_Database_entity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCity_name() {
+        return City_name;
+    }
+
+    public void setCity_name(String city_name) {
+        City_name = city_name;
     }
 
     public double getTemp() {
