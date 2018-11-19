@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.example.mosaab.weatherJson.R;
 
-import de.cketti.mailto.EmailIntentBuilder;
-
 /**
  * A simple {@link Fragment} subclass.
  */
