@@ -8,6 +8,7 @@
         app:cardCornerRadius="16dp"
         android:layout_margin="8dp"
         android:alpha="0.8"
+        android:backgroundTint="@color/color_primary"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -103,12 +104,12 @@
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="124dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:src="@drawable/ic_arrow_upward_black_24dp"
             app:layout_constraintBottom_toTopOf="@+id/forecast_degree_TV"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/max_temp_Tv"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -116,13 +117,13 @@
             android:id="@+id/max_temp_Tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
             android:layout_marginBottom="8dp"
             android:text="20"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/forecast_degree_TV"
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -131,15 +132,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="124dp"
+            android:layout_marginEnd="120dp"
             android:layout_marginBottom="8dp"
             android:text="20"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/forecast_degree_TV"
-            app:layout_constraintEnd_toEndOf="@+id/forecast_desc_Tv"
-            app:layout_constraintHorizontal_bias="0.78"
-            app:layout_constraintStart_toStartOf="@+id/forecast_desc_Tv"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/imageView2"

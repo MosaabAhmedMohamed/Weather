@@ -2,7 +2,6 @@ package com.example.mosaab.weather.ViewHolder;
 
 
 import android.annotation.SuppressLint;
-import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,13 +25,12 @@ import com.example.mosaab.weather.Model.Weahter_Datebase_entity;
 import com.example.mosaab.weather.WebServices.RetroFit_Client;
 import com.example.mosaab.weather.Model.Weather_Json;
 import com.example.mosaab.weather.common.Common;
-import com.example.mosaab.weather.weather_Database;
+import com.example.mosaab.weather.Databases.weather_Database;
 import com.example.mosaab.weatherJson.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,10 +43,11 @@ import retrofit2.Response;
 public class City_Fragment_Holder extends Fragment {
 
     private OpenWeatherCity openWeatherCity;
-    private TextView higher_degree, lower_degree, degree;
+    private TextView higher_degree, lower_degree, degree,Weather_Desc;
     private View City_View;
     private String City_name;
     private ImageView imageView_weather;
+    private ProgressBar progressBar;
 
     private RecyclerView forecast_recycler;
     private Forecast_Recycler_Adapter forecast_adapter;
@@ -81,6 +81,7 @@ public class City_Fragment_Holder extends Fragment {
 
         if (isOnline())
         {
+            progressBar.setVisibility(View.VISIBLE);
             Common.isOnline="YES";
             InitRetorFit();
             getWeather();
@@ -89,6 +90,7 @@ public class City_Fragment_Holder extends Fragment {
         }
         else if(isOnline() == false)
         {
+            progressBar.setVisibility(View.GONE);
             Common.isOnline="NO";
             CheckDate();
         }
@@ -103,7 +105,9 @@ public class City_Fragment_Holder extends Fragment {
             higher_degree = City_View.findViewById(R.id.higher_degree_TV);
             lower_degree = City_View.findViewById(R.id.lower_degree_TV);
             degree = City_View.findViewById(R.id.degree_Tv);
+            Weather_Desc = City_View.findViewById(R.id.weather_desc_Tv);
             imageView_weather = City_View.findViewById(R.id.image_weather);
+            progressBar = City_View.findViewById(R.id.progress_circular);
 
             //Recycler View
             forecast_recycler = City_View.findViewById(R.id.forecast_recycler_view);
@@ -155,14 +159,18 @@ public class City_Fragment_Holder extends Fragment {
         Calendar cal = Calendar.getInstance();
 
         int end_Of_forecast_days= Integer.valueOf(cal.get(Calendar.DATE));
-        end_Of_forecast_days+=5;
+        end_Of_forecast_days+=6;
         if (String.valueOf( cal.get(Calendar.DATE)).equals(Common.convertUnixToDay(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDate())) &&
                 String.valueOf(end_Of_forecast_days).equals(Common.convertUnixToDay(forecast_database_entitiy.get(forecast_database_entitiy.size()-1).getDate())))
         {
             GetWeatherFromDatabase();
             GetForecastFromDatabase();
         }
+
+        Toast.makeText(getActivity(), "Check Your Internet Connection !", Toast.LENGTH_SHORT).show();
+
     }
+
     //Getting the weather data from the API
     private void getWeather () {
             Call<Weather_Json> call = openWeatherCity
@@ -182,6 +190,7 @@ public class City_Fragment_Holder extends Fragment {
                     degree.setText(String.valueOf(weather_json.getMain().getTemp()));
                     higher_degree.setText(String.valueOf(weather_json.getMain().getTemp_max()));
                     lower_degree.setText(String.valueOf(weather_json.getMain().getTemp_min()));
+                    Weather_Desc.setText(weather_json.getWeather().get(0).getDescription());
 
                     loadImage();
                     InsetWeatherToDatabase();
@@ -228,10 +237,11 @@ public class City_Fragment_Holder extends Fragment {
             degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp()));
             higher_degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp_max()));
             lower_degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp_min()));
+            Weather_Desc.setText(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDescription());
         }
 
 
-         Toast.makeText(getActivity(), "Check Your Internet Connection !", Toast.LENGTH_SHORT).show();
+
     }
 
     //Getting the Forecast data from the API
@@ -250,6 +260,8 @@ public class City_Fragment_Holder extends Fragment {
                     return;
                 }
 
+                progressBar.setVisibility(View.GONE);
+                forecast_recycler.setVisibility(View.VISIBLE);
                 forecast_jsons_list =new Forecast_Json();
                 forecast_jsons_list = response.body();
                 forecast_adapter = new Forecast_Recycler_Adapter(getActivity(), forecast_jsons_list);
@@ -273,7 +285,7 @@ public class City_Fragment_Holder extends Fragment {
 
     private void InsertForecastToDatebase() {
 
-        for (int i = 0; i <forecast_jsons_list.list.size() ; i++) {
+        for (int i = 0; i <forecast_jsons_list.getList().size() ; i++) {
 
 
             database.weather_dao().insertAllToForecast(new Forecast_Database_entity(City_name,forecast_jsons_list.getList().get(i).getMain().getTemp(),

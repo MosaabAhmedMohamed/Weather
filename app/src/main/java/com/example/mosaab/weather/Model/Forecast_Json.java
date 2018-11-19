@@ -13,7 +13,7 @@ public class Forecast_Json {
     @SerializedName("cnt")
     private int cnt ;
     @SerializedName("list")
-    public List<MyList> list ;
+    private List<MyList> list ;
     @SerializedName("city")
     private City city ;
 

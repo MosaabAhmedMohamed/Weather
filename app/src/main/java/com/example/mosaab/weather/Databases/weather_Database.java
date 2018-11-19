@@ -1,4 +1,4 @@
-package com.example.mosaab.weather;
+package com.example.mosaab.weather.Databases;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;

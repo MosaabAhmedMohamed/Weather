@@ -54,9 +54,9 @@ public class Forecast_Recycler_Adapter extends RecyclerView.Adapter<Forecast_Rec
                     .append(forecast_json_list.getList().get(i).getWeather().get(0).getIcon())
                     .append(".png").toString()).into(viewHolder.forecast_imageView);
 
-            viewHolder.Desc_Tv.setText(forecast_json_list.list.get(i).getWeather().get(0).getDescription());
+            viewHolder.Desc_Tv.setText(forecast_json_list.getList().get(i).getWeather().get(0).getDescription());
             viewHolder.Degree_Tv.setText(String.valueOf(forecast_json_list.getList().get(i).getMain().getTemp()));
-            viewHolder.Date_Tv.setText("Date : " + Common.convertUnixToDate(forecast_json_list.list.get(i).getDt()));
+            viewHolder.Date_Tv.setText("Date : " + Common.convertUnixToDate(forecast_json_list.getList().get(i).getDt()));
             viewHolder.Min_degree_Tv.setText(String.valueOf(forecast_json_list.getList().get(i).getMain().getTemp_min()));
             viewHolder.Max_degree_Tv.setText(String.valueOf(forecast_json_list.getList().get(i).getMain().getTemp_max()));
         }

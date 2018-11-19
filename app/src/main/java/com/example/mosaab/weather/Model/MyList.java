@@ -8,10 +8,9 @@ public class MyList {
     private List<weather> weather ;
     private Clouds clouds ;
     private Wind wind ;
-    private Snow snow ;
     private Sys sys ;
     private String dt_txt ;
-    private Rain rain ;
+
 
     public MyList() {
     }
@@ -56,14 +55,6 @@ public class MyList {
         this.wind = wind;
     }
 
-    public Snow getSnow() {
-        return snow;
-    }
-
-    public void setSnow(Snow snow) {
-        this.snow = snow;
-    }
-
     public Sys getSys() {
         return sys;
     }
@@ -80,11 +71,5 @@ public class MyList {
         this.dt_txt = dt_txt;
     }
 
-    public Rain getRain() {
-        return rain;
-    }
 
-    public void setRain(Rain rain) {
-        this.rain = rain;
-    }
 }
