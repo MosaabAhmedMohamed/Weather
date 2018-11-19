@@ -4,6 +4,7 @@ package com.example.mosaab.weather.ViewHolder;
 import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +49,7 @@ public class City_Fragment_Holder extends Fragment {
     private String City_name;
     private ImageView imageView_weather;
     private ProgressBar progressBar;
+    private ConstraintLayout base_layout,not_connected_layout;
 
     private RecyclerView forecast_recycler;
     private Forecast_Recycler_Adapter forecast_adapter;
@@ -91,6 +93,7 @@ public class City_Fragment_Holder extends Fragment {
         else if(isOnline() == false)
         {
             progressBar.setVisibility(View.GONE);
+            forecast_recycler.setVisibility(View.VISIBLE);
             Common.isOnline="NO";
             CheckDate();
         }
@@ -101,6 +104,10 @@ public class City_Fragment_Holder extends Fragment {
 
 
     private void InitUI () {
+            //Layout
+            base_layout = City_View.findViewById(R.id.base_Layout);
+            not_connected_layout = City_View.findViewById(R.id.not_connected_layout);
+
 
             higher_degree = City_View.findViewById(R.id.higher_degree_TV);
             lower_degree = City_View.findViewById(R.id.lower_degree_TV);
@@ -108,6 +115,7 @@ public class City_Fragment_Holder extends Fragment {
             Weather_Desc = City_View.findViewById(R.id.weather_desc_Tv);
             imageView_weather = City_View.findViewById(R.id.image_weather);
             progressBar = City_View.findViewById(R.id.progress_circular);
+
 
             //Recycler View
             forecast_recycler = City_View.findViewById(R.id.forecast_recycler_view);
@@ -158,16 +166,22 @@ public class City_Fragment_Holder extends Fragment {
         InitDatebaseEntities();
         Calendar cal = Calendar.getInstance();
 
-        int end_Of_forecast_days= Integer.valueOf(cal.get(Calendar.DATE));
-        end_Of_forecast_days+=6;
-        if (String.valueOf( cal.get(Calendar.DATE)).equals(Common.convertUnixToDay(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDate())) &&
-                String.valueOf(end_Of_forecast_days).equals(Common.convertUnixToDay(forecast_database_entitiy.get(forecast_database_entitiy.size()-1).getDate())))
+        String weather_database_Day=Common.convertUnixToDay(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDate());
+        Log.d("cal", String.valueOf(cal.get(Calendar.DATE)));
+        Log.d("cal", weather_database_Day);
+
+        if (String.valueOf( cal.get(Calendar.DATE)).equals(weather_database_Day) )
         {
             GetWeatherFromDatabase();
             GetForecastFromDatabase();
+
+        }
+        else if(!String.valueOf( cal.get(Calendar.DATE)).equals(weather_database_Day))
+        {
+            base_layout.setVisibility(View.GONE);
+            not_connected_layout.setVisibility(View.VISIBLE);
         }
 
-        Toast.makeText(getActivity(), "Check Your Internet Connection !", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -194,6 +208,9 @@ public class City_Fragment_Holder extends Fragment {
 
                     loadImage();
                     InsetWeatherToDatabase();
+
+                    Common.setTemp(String.valueOf(weather_json.getMain().getTemp()));
+                    Common.setDesc(weather_json.getWeather().get(0).getDescription());
 
                    // Toast.makeText(getActivity(), weather_json.getName(),Toast.LENGTH_SHORT).show();
                     //  Log.d("respooo", String.valueOf(comments.getMain().getTemp()));
@@ -238,6 +255,9 @@ public class City_Fragment_Holder extends Fragment {
             higher_degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp_max()));
             lower_degree.setText(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp_min()));
             Weather_Desc.setText(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDescription());
+
+            Common.setTemp(String.valueOf(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getTemp()));
+            Common.setDesc(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDescription());
         }
 
 

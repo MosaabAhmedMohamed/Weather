@@ -38,10 +38,9 @@ public class Contact_Us extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"here@there.ie"});
-                intent.putExtra(Intent.EXTRA_CC, new String[] {"andy@whatever.com"});
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"mosabahmeddev@gmail.com"});
                 try {
-                    startActivity(Intent.createChooser(intent, "How to send mail?"));
+                    startActivity(Intent.createChooser(intent, "E-mail"));
                 } catch (android.content.ActivityNotFoundException ex) {
                     //do something else
                 }

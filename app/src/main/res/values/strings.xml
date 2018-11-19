@@ -9,4 +9,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">We are happy to hear from you </string>
+    <string name="appwidget_text">25</string>
+    <string name="add_widget">Add widget</string>
 </resources>

@@ -7,8 +7,26 @@ public class Common {
 
     public static final String API_KEy = "af7b1830541171b1ec00a7f31168e3d7";
 
+    public static String Temp;
+    public static String Desc;
+
     public static String isOnline=null;
 
+    public static String getTemp() {
+        return Temp;
+    }
+
+    public static void setTemp(String temp) {
+        Temp = temp;
+    }
+
+    public static String getDesc() {
+        return Desc;
+    }
+
+    public static void setDesc(String desc) {
+        Desc = desc;
+    }
 
     public static String convertUnixToDate(long dt)
     {
