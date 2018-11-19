@@ -1,7 +1,6 @@
 package com.example.mosaab.weather.ViewHolder;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -14,15 +13,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.Window;
 
-import com.example.mosaab.weather.Interfaces.OpenWeatherCity;
 import com.example.mosaab.weatherJson.R;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,9 +25,9 @@ public class MainActivity extends AppCompatActivity
     private City_Fragment_Holder New_York;
     private City_Fragment_Holder Dubai;
     private City_Fragment_Holder australia;
+    private Contact_Us contact_us;
     private FragmentTransaction fragmentTransaction;
     private Toolbar toolbar;
-    OpenWeatherCity mServiecs;
 
     private ConstraintLayout placeHolder_layout;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -47,20 +40,16 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle("Cairo");
         setSupportActionBar(toolbar);
 
+        InitUI();
+
+        InitFragmentHolder();
+
+    }
+
+
+    private void InitUI()
+    {
         placeHolder_layout = findViewById(R.id.PlaceHolder_layout);
-
-        cairo= new City_Fragment_Holder("Cairo");
-        fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.PlaceHolder_layout,cairo);
-        fragmentTransaction.commit();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://openweathermap.org/data/2.5/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        mServiecs = retrofit.create(OpenWeatherCity.class);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,6 +61,14 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    private void InitFragmentHolder()
+    {
+        cairo= new City_Fragment_Holder("Cairo");
+        fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.PlaceHolder_layout,cairo);
+        fragmentTransaction.commit();
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -134,6 +131,12 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_contact) {
 
+            toolbar.setTitleMarginStart(300);
+            toolbar.setTitle("Contact Us");
+            contact_us = new Contact_Us();
+            fragmentTransaction=getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.PlaceHolder_layout, contact_us);
+            fragmentTransaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
