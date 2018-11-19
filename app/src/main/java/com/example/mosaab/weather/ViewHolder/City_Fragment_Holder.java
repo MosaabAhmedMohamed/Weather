@@ -165,21 +165,25 @@ public class City_Fragment_Holder extends Fragment {
     {
         InitDatebaseEntities();
         Calendar cal = Calendar.getInstance();
+        String weather_database_Day;
 
-        String weather_database_Day=Common.convertUnixToDay(weahter_datebase_entity.get(weahter_datebase_entity.size()-1).getDate());
-        Log.d("cal", String.valueOf(cal.get(Calendar.DATE)));
-        Log.d("cal", weather_database_Day);
-
-        if (String.valueOf( cal.get(Calendar.DATE)).equals(weather_database_Day) )
+        if(weahter_datebase_entity.isEmpty())
         {
-            GetWeatherFromDatabase();
-            GetForecastFromDatabase();
 
-        }
-        else if(!String.valueOf( cal.get(Calendar.DATE)).equals(weather_database_Day))
-        {
             base_layout.setVisibility(View.GONE);
             not_connected_layout.setVisibility(View.VISIBLE);
+
+        }
+        else if(!weahter_datebase_entity.isEmpty()) {
+            weather_database_Day = Common.convertUnixToDay(weahter_datebase_entity.get(weahter_datebase_entity.size() - 1).getDate());
+            if (!String.valueOf(cal.get(Calendar.DATE)).equals(weather_database_Day)) {
+                base_layout.setVisibility(View.GONE);
+                not_connected_layout.setVisibility(View.VISIBLE);
+            } else if (String.valueOf(cal.get(Calendar.DATE)).equals(weather_database_Day)) {
+                GetWeatherFromDatabase();
+                GetForecastFromDatabase();
+
+            }
         }
 
 
